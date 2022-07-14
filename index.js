@@ -20,6 +20,12 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
 app.use(cors());
 app.use(cookieParser());
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+
 app.use(express.static('images'))
 
 app.use('/posts', posts)
