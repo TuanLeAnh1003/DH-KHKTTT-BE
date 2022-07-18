@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPosts, getPostById, createPost, updatePost, getPostsByTitle, getPostsByLabel, getEnoughPostsByTitle, uploadImageToFirebase, uploadImages} from '../controllers/posts.js'
+import { getPosts, getPostsSearch, getPostById, createPost, updatePost, getPostsByTitle, getPostsByLabel, getEnoughPostsByTitle, uploadImageToFirebase, uploadImages} from '../controllers/posts.js'
 import multer from 'multer'
 import multiparty from 'connect-multiparty'
 
@@ -14,6 +14,8 @@ const upload = multer({ dest: "images/" });
 const router = express.Router();
 
 router.get('/', getPosts);
+
+router.post('/search', getPostsSearch);
 
 router.get('/:postId', getPostById);
 

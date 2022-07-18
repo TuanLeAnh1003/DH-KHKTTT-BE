@@ -5,6 +5,7 @@ import fs from 'fs'
 
 import uuid from 'uuid-v4'
 import { bucket } from '../firebase/config.js'
+import { Console } from 'console';
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -20,6 +21,27 @@ export const getPosts = async (req, res) => {
     })
   }
 }
+
+export const getPostsSearch = async (req, res) => {
+  try {
+    let results;
+      results = await PostModel.aggregate([
+        {
+          $search: {
+            "index": "searchPost",
+            "autocomplete": {
+              "query": req.body.input,
+              "path": "title"
+            },
+          },
+        }
+      ]);
+      if (results) return res.status(200).send(results);
+  } catch (error) {
+    console.log(error);
+    res.send([]);
+  }
+};
 
 export const getPostById = async (req, res) => {
   try {
